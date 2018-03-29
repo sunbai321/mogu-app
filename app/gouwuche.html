@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>购物车</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/jquery.js"></script>
+  
+   <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  
+<style>
+   .ui-bar-f{
+    background-color: #FF8888;
+    border-style: none;
+  }
+    .ui-page-theme-a{
+      text-shadow: none;
+    }
+   .ti{
+    text-align: center;
+    padding: 20px;
+  }
+  
+
+   .goodsImg{ 
+    width: 150px;
+    height: 200px;
+    float: left;
+    margin-left: 10px;
+    
+   }
+   
+   .goodsName{
+      font-size: 16px;
+      width: 180px;
+      height: 120px;
+      margin-left: -40px;
+   }
+   .price{
+    font-size: 16px;
+    color: red;
+    margin-left: -40px;
+
+   }
+   .zi{
+    width: 600px;
+    height: 100px;
+    float: left;
+    margin-left: 50px;
+    }
+   .tianjia{
+    width: 660px;
+    height: 100px;
+    line-height: 100px;
+    float: left;
+    margin-top: 20px;
+    padding-left: 25px;
+   }
+   .jian{
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    color: white;
+    background-color:#ff8888;
+    border: 0px;
+    border-radius: 50%;
+   }
+   .jia{
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    color: white;
+    background-color:#ff8888;
+    border: 0px;
+    border-radius: 50%;
+   }
+   .number{
+    text-align: center;
+    border: 0px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+   }
+    .X{
+      margin-left: 150px;
+       margin-top: -180px;
+
+   }
+   .xiangxi{
+    width: 1080px;
+    height: auto;
+   }
+   .zuida{
+    width: 880px;
+    
+    
+   }
+   .zuida:after{
+      content: "";
+      display: block;
+      clear: both;
+   }
+
+   .footer{
+    width: 100%;
+    height: 110px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+   }
+   .footer1{
+    font-size: 20px;
+    margin: 0px;
+    margin-top: -12px;
+    margin-left: 50px;
+    display: inline;
+    float: left;
+   }
+   .footer2{
+    width: 50px;
+    height: 20px;
+    font-size: 18px;
+    float: right;
+    margin-top: -25px;
+    margin-right: 15px;
+
+   }
+.quanxuande{
+  display: inline;
+  float: left;
+  
+}
+  </style>
+
+</head>
+<body>
+<div data-role="page">
+        <div data-role="header" data-theme="f">
+          <div class="ti" style="color:white;">
+           <span style="font-size: 20px">购物车</span>
+            
+          </div> 
+        </div>
+     <div data-role="content"> 
+        
+        <div class="xiangxi">
+        
+        </div> 
+     </div>
+
+  <div class="footer" style="background:white;">
+  
+  <div style="padding-top:15px;padding-left: 20px;">
+  <input type="checkbox" class="quanxuande" ></input>
+  <span style='display:inline;font-size:20px;float: left;margin-left: 32px;margin-top:-12px;'>全选</span>
+  </div>
+
+  <p class="footer1">总金额</p>
+  <a data-role="button" class="footer2">结算</a>
+</div>  
+
+   
+ <div data-role="footer" data-position="fixed">
+ 
+          <div data-role="navbar">
+              <ul>
+                <li><a href="zhuye.html" style="background-color: #f9e9ec" rel="external" data-icon="info">首页</a></li>
+                <li><a href="gouwuche.html"  style="background-color: #FF8888;color: white;text-shadow: none;"  rel="external"  data-icon="check">购物车</a></li>
+                <li><a class="shezhi" href="" style="background-color: #f9e9ec" rel="external" data-icon="star">设置</a></li>
+             </ul>
+         </div>
+      </div>
+</div>
+
+</body>
+
+<script>
+
+   var userID=localStorage.getItem('userID');
+   console.log(localStorage.getItem('userID'));
+  // 最大的ajax
+
+   $.ajax({
+    url:"http://datainfo.duapp.com/shopdata/getCar.php",
+    dataType:"JSONP",
+    data:{userID:userID},
+    success:function(data){
+
+      // 渲染一个网页
+                  console.log(data);
+                  console.log('=====');
+                  for(var i=0;i<data.length;i++){
+
+                    $('.xiangxi').html($('.xiangxi').html()+` 
+                 
+                                  <div class='zuida'>
+
+                                  <div style="float:left;margin-left:-10px;margin-top:90px">
+                                      
+                                     <input type='checkbox' class='checkbox1' name='fuxuan' ></input> 
+                                     
+                                  </div>
+
+                                  <div>
+                                    <img src="`+data[i].goodsListImg+`" alt="" class="goodsImg">
+                                  </div>
+                                  
+                                  <div class="zi">
+                                  
+                                    <span class="goodsName">`+data[i].goodsName+`</span>
+                                    
+                                    <p class='price'>¥`+data[i].price+`</p>
+                                  </div>
+
+                                  <div class="tianjia">
+                                    <input type="button" value="-" class="jian" id="`+data[i].goodsID+`">
+                                    <input type="text" value="`+data[i].number+`" class="number">
+                                    <input type="button" value="+" class="jia" id="`+data[i].goodsID+`">
+                                    <p class='X'>删除</p>
+                                  </div>
+                               </div> `
+               );
+              console.log(data[i].goodsName,data[i].price,data[i].number,data[i].goodsListImg);
+             }
+           var sum=0;
+         
+
+    for(var i=0;i<data.length;i++){
+        sum+=data[i].number*data[i].price;
+    }
+
+    if(sum == 0)
+        {
+          $(".footer1").html(' ');
+        }
+    else
+        {
+          $(".footer1").html('总金额  ¥ '+sum);
+        }
+
+
+       // 减号事件
+ $('.jian').click(function(){
+ 
+             console.log('======');
+             console.log('goodsID'+$(this).attr('id'));
+             var val=$(this).next().val();
+             var jian1=Number(val);
+         
+            
+            if(val == 1){
+              $(this).next().attr('disabled','disabled');
+              $(this).css('background-color','gray');
+            }
+            else{
+               $(this).css('background-color','#ff8888');
+            $(this).next().val(jian1-1);
+               }
+
+            $.ajax({
+                   url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+                   data:{userID:userID,goodsID:$(this).attr('id'),number:$(this).next().val()},
+                   success:function(data){
+                   console.log($(this).attr('id'));
+                   console.log(data);
+                   console.log('当前数量：'+jian1);
+                     }
+                 });
+             $.ajax({
+          url:"http://datainfo.duapp.com/shopdata/getCar.php",
+          dataType:"JSONP",
+          data:{userID:userID},
+          success:function(data){
+            $(location).prop('href','gouwuche.html');
+          }
+    }); 
+
+    });
+  
+  // 删除事件的点击
+
+   $('.X').click(function(){
+         
+           $(this).parent().parent().attr('display','none');
+           $.ajax({
+           url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+           data:{userID:userID,goodsID:$(this).prev().attr('id'),number:'0'},
+           success:function(data){
+             $(location).prop('href','gouwuche.html');
+           }
+         });
+    
+     
+  })
+
+
+     // 增加商品数量的事件
+  $('.jia').click(function(){
+              var jia1=$(this).prev().val();
+              var jia2=Number(jia1);
+              if(jia2 >=1)
+                  $(this).prev().prev().css('background-color','#ff8888');
+                   $(this).prev().val(jia2+1);
+
+               $.ajax({
+                     url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+                     data:{userID:userID,goodsID:$(this).attr('id'),number:$(this).prev().val()},
+                     success:function(data){
+                        console.log($(this).attr('id'));
+                        console.log(data);
+                        
+                       }
+                   });
+$.ajax({
+          url:"http://datainfo.duapp.com/shopdata/getCar.php",
+          dataType:"JSONP",
+          data:{userID:userID},
+          success:function(data){
+            $(location).prop('href','gouwuche.html');
+          }
+    }); 
+
+              });
+       
+   //  复选框开始
+ var checkAll = $('.quanxuande');
+ var checkBox = $('.checkbox1');
+
+ checkBox.on('click',function () {
+       
+        if(this.checked){
+            
+            var checkedAllFlag = true;
+            
+            for(var i = 0,len = checkBox.length;i<len;i++){
+
+                if(!checkBox[i].checked){
+                    checkedAllFlag = false;
+                    break;
+                }
+            }
+           
+            checkAll.prop("checked", checkedAllFlag);
+        }
+        else{
+            //如果中取消选中 ，那全选就直接设为未选中
+            checkAll.prop("checked", false);
+        }
+    });
+  $(".quanxuande").click(function () {
+            var isChecked = $(this).prop("checked");
+            $(".checkbox1").prop("checked", isChecked);
+        })
+
+//复选框事件结束
+
+ }
+   });
+  </script> 
+
+<script>
+if(userID){
+   $('.shezhi').attr('href','shezhi.html');
+   console.log('aaa');
+ }
+ else{
+     console.log('aaabbb');
+  $('.shezhi').attr('href','denglu.html');
+ }
+</script>
+
+</html>

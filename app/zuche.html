@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>用户注册</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+	
+	<style>
+		*{
+			font-size:16px;
+		}
+		.sunbai{margin-top: 200px;}
+	</style>
+</head>
+	<body>
+				<div style="margin-left: 20px;margin-right: 25px;color: #ff0076">
+				<p>用户名/手机号：<input type="text" id="yonghuming" name="username" /></p>
+				<p>密码：<input type="password" id="mima1" name="pswd" /></p>
+				<p>确认密码：<input type="password" id="mima2" name="repswd" /></p>
+				<p style="line-height:40px;color: gray">已阅读并同意以下协议，<u><strong>接受免除或者限制责任、诉讼管辖约定</strong></u>等粗体下划线标示条款，愿意同步创建支付宝账户，《蘑菇街服务协议》、《法律声明及隐私权政策》、《支付宝服务协议》</p>
+				<span id="zuce"></span>
+              <div class="sunbai">
+				<input type="submit" style="background-color: #ff0076;" name="submit" id="tijiao" value="同意协议并注册"/>
+				</div>
+				
+				</div>
+	</body>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//检测用户名
+			$('input[name="username"]').blur(function(){
+				$(this).nextAll().html("");
+				if($(this).val() == ''){
+					$(this).parent().append('<font color="red">&nbsp;&nbsp;用户名不能为空</font>');
+				}else{
+					$(this).nextAll().html("");
+				}
+			});
+			//检测密码
+			$('input[name="pswd"]').blur(function(){
+				$(this).nextAll().html("");
+				if($(this).val() == ''){
+					$(this).parent().append('<font color="red">&nbsp;&nbsp;密码不能为空</font>');
+				}else{
+					$(this).nextAll().html("");
+				}
+			});
+			//检测确认密码
+			$('input[name="repswd"]').blur(function(){
+				$(this).nextAll().html("");
+				if($(this).val() != $('input[name="pswd"]').get(0).value){
+					$(this).parent().append('<font color="red">&nbsp;&nbsp;两次输入的密码必须一致</font>');
+				}else{
+					$(this).nextAll().html("");
+				}
+			});
+		});	
+
+
+
+
+    //type:请求方式（get,post）
+	//url:接口地址
+	//data:传入的参数
+	//dataType:返回的数据类型，一般的值为--json/jsonp  
+	//success:成功后的回调函数
+	
+	 $('#tijiao').click(function(){
+
+	 	if($('#mima1').val()==$('#mima2').val()){
+
+		 $.ajax({
+		 	type:'get',
+		 	url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+		 	data:{status:'register',userID:$('#yonghuming').val(),password:$('#mima1').val()},
+		 	dataType:'json',
+		 	success:function(data){
+		 		console.log(data);
+
+		 		if(data==0){
+                	$('#zuce').html("用户名已存在");
+                                
+                }
+                else if(data==2){
+                	$('#zuce').html( "数据库报错");
+                }
+                else{
+                	$('#zuce').html("注册成功！");
+                           
+                }
+						
+						/*switch(data){
+							case 0:
+						   		$('#zuce').html("用户名已存在");
+						   		break;
+							case 1:
+						   		$('#zuce').html("注册成功！");
+						   		// window.location.href="file:///C:/Users/Administrator/Desktop/%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E4%B8%8Eweb%E5%BC%80%E5%8F%91/%E7%AC%AC%E5%9B%9B%E6%AC%A1%E4%BD%9C%E4%B8%9A/qq%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.html";
+						   		break;
+							case 2:
+						      	$('#zuce').html( "数据库报错");
+						   		break;
+							default:
+						    	alert('error!');
+						    	break;
+						}*/
+         		 }
+	     })
+
+		} else {alert('密码不一致');}
+})
+	</script>
+</html>

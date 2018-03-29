@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>蘑菇街首页</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="js/jquery.js"></script>
+        <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+        
+        <script src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script src="js/swiper-3.4.2.min.js"></script>
+  <style>
+    a{
+      text-decoration: none;
+    } 
+    .haha{
+      float: left;
+      list-style: none;
+      color:gray
+       }
+    li{
+      border: 2px solid gray;
+      float: left;
+      padding: 20px;
+      margin:10px;
+    }
+    img{
+     width: auto;
+      height: 300px;
+    }
+  </style>
+
+<style>
+   .ui-bar-f{
+    background-color: #FF8888;
+    border-style: none;
+    height: 70px;
+  }
+    .ui-page-theme-a{
+      text-shadow: none;
+    }
+    .swiper-container {
+      width: 100%;
+      height: 300px;
+    }
+    .swiper-slide {
+      text-align: center;
+      width: auto;
+      height: 300px;
+      font-size: 18px;
+      background: #fff;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      width: auto;
+      height: 300px;
+      font-size: 18px;
+      background: #fff;
+    }
+    .sy{
+      margin-top: 20px;
+    }
+    
+  </style>
+
+</head>
+<body>
+<div data-role="page">
+        <div data-role="header" data-theme="f">
+           
+            <h1 style="color: white;padding-top: 25px;font-size:22px;font-weight: normal">蘑菇街</h1>
+            <a style="margin-top: 20px;" href="shousuo.html" rel="external" data-icon="search" data-iconpos="notext" data-position="right"></a>
+       </div>
+        
+        <div data-role="content">        
+        <!--    轮播图 -->
+            <div>
+                  <div class="swiper-container">
+                       <div class="swiper-wrapper">
+                              <div class="swiper-slide"><img src="images/1.jpg"></div>
+                              <div class="swiper-slide"><img src="images/2.jpg"></div>
+                              <div class="swiper-slide"><img src="images/3.jpg"></div>
+                        </div>
+                      <div class="swiper-pagination"></div>
+                 </div>        
+           <div>
+           </div>
+        <!-- 分类列表 -->
+          <div>
+              <p><a style="color: red">* 商品分类 ></a></p>
+              <ul class="haha">
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+              <a data-role="button" style="color: white;background-color:#FF8888;border-style: none;margin-top:150px;text-shadow: none;font-weight: normal" href="xiangqing.html" rel="external">更多</a>
+          </div>
+
+          <!--  热推列表 -->
+<div style="margin-top:20px">
+        <div class="item"> 
+          <p><a style="color: red">* 热推列表 ></a></p>
+          <a>
+          <img style="width:380px;height: 250px;" src="images/6.jpg"></a>
+        </div>
+        <div class="item"> 
+          <p><a style="color: red">* 热推列表 ></a></p>
+          <a>
+          <img style="width:380px;height: 250px;" src="images/6.jpg"></a>
+        </div>
+
+        <div class="item">
+        <p><a style="color: red">* 一周最热 ></a></p>
+         <a> 
+          <img style="width:380px;height: 250px;" src="images/8.jpg"></a>
+        </div>
+
+        <div class="item">
+        <p><a style="color: red">* 推荐分类 ></a></p>
+          <a> 
+          <img style="width:380px;height: 250px;" src="images/9.jpg"></a>
+        </div>
+        <div class="item"> 
+          <p><a style="color: red">* 热推列表 ></a></p>
+          <a>
+          <img style="width:380px;height: 250px;" src="images/6.jpg"></a>
+        </div>
+
+        <div class="item">
+        <p><a style="color: red">* 一周最热 ></a></p>
+         <a> 
+          <img style="width:380px;height: 250px;" src="images/8.jpg"></a>
+        </div>
+
+        <div class="item">
+        <p><a style="color: red">* 推荐分类 ></a></p>
+          <a> 
+          <img style="width:380px;height: 250px;" src="images/9.jpg"></a>
+        </div>
+<div>
+
+      <div data-role="footer" data-position="fixed">
+          <div data-role="navbar">
+              <ul>
+                <li><a href="zhuye.html" style="background-color:#FF8888;color: white;text-shadow: none;" rel="external" data-icon="info">首页</a></li>
+                <li><a href="gouwuche.html" rel="external" style="background-color: #f9e9ec" data-icon="check">购物车</a></li>
+                <li><a class="shezhi" href="" rel="external" style="background-color: #f9e9ec" data-icon="star">设置</a></li>
+             </ul>
+         </div>
+      </div>
+</div>
+
+</body>
+ <!--   获取商品分类名称 -->
+  <script>
+          $.ajax({
+              url:'http://datainfo.duapp.com/shopdata/getclass.php',
+              success:function(data){
+                    var data1 =JSON.parse(data);//返回json数组对象
+                    console.log(data1);
+                    console.log('===');
+                    var p=$(".haha li"); 
+                    for(var i=0;i<13;i++){
+                  $(p[i]).html(data1[i].className);
+                  localStorage.setItem('classID'+i,data1[i].classID);
+                  
+                      }
+                 }
+              });
+    
+  // 点击商品名称跳转相应分类页 
+
+  var goods =$(".haha li");
+   for(var i=0;i<8;i++){
+    (function(i){
+      $(goods[i]).click(function(){
+        var class1=localStorage['classID'+i];
+        $(location).prop('href', 'xiangqing3.html#'+class1);
+        
+      })
+    })(i)
+  }
+
+        // 热推列表中图片获取 
+
+ $.ajax({
+    url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+    dataType:"JSONP",
+    success:function(data){ 
+      console.log(data);
+
+      var img4 = $(".item img");
+
+      for (var i = 0; i < 10; i++) {
+        localStorage.setItem('goods'+i,data[i].goodsID);//存数据
+
+        console.log(localStorage.getItem('goods'+i));
+          $(img4[i]).attr('src',data[i].goodsListImg);
+        }
+    }
+    });
+
+
+ // 热推列表中图片跳转到相应页 
+
+  var img1=$('.item img');
+  for(var i=0;i<img1.length;i++){
+    (function(i){
+      $(img1[i]).click(function(){
+        var goodsid=localStorage['goods'+i];
+         $(location).prop('href', 'xiangqing2.html#'+goodsid);
+      })
+    })(i);
+  }
+
+</script>   
+        <!-- 轮播图设置 -->
+<script>        
+  var mySwiper = new Swiper ('.swiper-container', {
+    direction: 'horizontal',
+    loop: true,
+    pagination: '.swiper-pagination',
+    autoplay : 2000,
+   })    
+      
+  </script>
+
+<script>
+ var userID=localStorage.getItem('userID');
+
+if(userID){
+   $('.shezhi').attr('href','shezhi.html');
+    }
+ else{
+  $('.shezhi').attr('href','denglu.html');
+   }
+</script>
+</html>

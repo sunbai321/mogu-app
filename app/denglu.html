@@ -1,0 +1,137 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>denglu</title>
+  
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<style type="text/css">
+	 a:link{
+          text-decoration: none;
+       }
+ .aaa{
+    float: left;
+    margin-left: 5px;
+    padding-left: 5px;
+    color: white;
+    }
+ * {
+    text-shadow: none;
+   }
+ 
+</style>
+<body>
+<div data-role="page">
+<div style="margin-top: 20px">
+<a href="zhuye.html" rel="external" style="color: #ff0076;font-size: 16px;font-weight: 200;padding: 25px;">
+暂不登录
+</a>
+<a href="#" style="padding-right:30px;color: #ff0076;font-size: 16px;float: right;font-weight: 200">
+帮助
+</a>
+</div>
+
+<div align="center" style="margin-top:100px;margin-bottom: 100px;">
+<img style="border-radius: 50%;width: 100px;height: 100px" src="images/tubiao.gif">
+</div>
+
+<div style="margin:auto 20px">
+
+<div>
+	<input type="text" name="number" placeholder="账号..." id="s"><br/>
+    <input type="password" name="passwords" placeholder="密码..." id="ss"><br/>
+
+</div>
+
+     <input style="background-color:#ff0076;" type="button" id="dl" value="登录" >
+     <br/>
+     <input type="button" value="注册" id="btn" >
+<div id="bb"style="color: #ff0076">
+
+</div>
+<div style="margin-top: 80px;color:#ff0076">
+    <span>微信登录</span>
+    <span style="padding-left: 230px">QQ登录</span>
+</div>
+</body>
+<script>
+
+	$("#btn").click(function(){
+        $(location).prop('href','zuche.html')
+    })
+
+</script>
+<script>
+    $(document).ready(function(){
+            //检测用户名
+            $('#s').blur(function(){
+                $(this).nextAll().html("");
+                if($(this).val() == ''){
+                    $(this).parent().append('<font color="red">&nbsp;&nbsp;用户名不能为空</font>');
+                }else{
+                    $(this).nextAll().html("");
+                }
+            });
+            //检测密码
+            $('#ss').blur(function(){
+                $(this).nextAll().html("");
+                if($(this).val() == ''){
+                    $(this).parent().append('<font color="red">&nbsp;&nbsp;密码不能为空</font>');
+                }else{
+                    $(this).nextAll().html("");
+                }
+            });
+       });
+
+  </script>
+  <script>
+    // $('zanbu').click(function(){
+    //   localStorage.clear();
+    // })
+  </script>
+
+  <script>
+
+   
+        $('#dl').click(function(){
+     	   if(($('#s').val()!="")&&($('#ss').val!="")){
+
+       
+          $.ajax({
+            type:'get',
+            url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+            dataType:'json',
+            data:{status:'login',userID:$('#s').val(),password:$('#ss').val()},
+            
+            success:function(data){
+                console.log(data);
+                if(data==0){
+                	$('#bb').html("用户名不存在");
+                }
+                else if(data==2){
+                	$('#bb').html("用户名与密码不符");
+                }
+                else{
+                	$('#bb').html("登录成功！");
+                                localStorage.setItem('userID',$('#s').val());
+                                console.log(localStorage['userID']);
+                                window.location.href="zhuye.html";
+                   }
+                 }
+         })
+
+        
+}
+ else{
+ alert('用户名/密码不能为空');
+}
+})
+    
+ 
+</script>
+
+</html>

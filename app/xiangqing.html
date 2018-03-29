@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <style type="text/css">
+     img{
+      width: 200px;
+      height: 200px;
+    }
+    
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		ul,li{
+			list-style: none;
+		}
+		.wrapper{
+			height: 50px;
+			position: relative;
+		}
+		.wrapper .scroller{
+			position: absolute;
+		}
+		.wrapper li{
+			height: 50px;
+			float: left;
+			line-height: 50px;
+			padding: 0 20px;
+		}
+		.cur{
+			border-bottom:3px solid #ff0076;
+		}
+		.wrapper01 {
+            position: relative;
+            height: 60px;
+            width: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+            border-bottom: 1px solid #ccc;
+            background-color: white;
+            border-top: 0.5px solid rgb(222,61,150);
+        }
+        #goods{
+        	width: 200px;
+        	float: left;
+        	margin-left: 3.5px;
+        }
+        .price{color:#ff0076}
+	</style>
+
+</head>
+
+<body>
+<div class="wrapper wrapper01" id="wrap">
+		<div class="scroller">
+			<ul class="haha">
+				<li class="cur">首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+				<li>首页</li>
+			</ul>	
+		</div>
+	</div>
+
+	<div  class="hahaha">
+	   <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+          <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+
+       <div id="goods">
+			<img>
+			<div class="goodsName"></div>
+			<div class="price"></div>
+       </div>
+		
+	   
+</div>
+
+<style type="text/css">
+ .hehe{
+  text-align: center;
+  border-radius: 50px;
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  background-color: #FF8888;
+  margin-left: 372px;
+  margin-top: 100px;
+}
+  
+.ki{margin-top: 30px;}
+</style>
+
+<div class="hehe">
+      <div  class="ki"><a style="color: white;text-decoration:none;text-shadow: none;" rel="external" href="zhuye.html">返回 主页</a></div>
+</div>
+
+</body>
+    <script src="jquery.1.11.3.min.js"></script>
+	<script src="js/iscroll.js"></script>
+	<script src="navbarscroll.js"></script>
+<script>
+
+  // scroll中得到商品的名称信息
+ $.ajax({
+    url:'http://datainfo.duapp.com/shopdata/getclass.php',
+    success:function(data){
+
+      var data1 =JSON.parse(data)
+
+      var p=$(".haha li"); 
+      for(var i=0;i<13;i++){
+        $(p[i]).html(data1[i].className);
+        localStorage.setItem('classID'+i,data1[i].classID);
+      }
+    }
+    
+    });
+    </script>
+<!-- 出现滚动效果 -->
+<script>
+	$(function(){
+		$('.wrapper').navbarscroll();
+	})
+</script>
+
+<script>
+
+  // for(var i)
+  // $.ajax({
+  //   url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+  // })
+</script>
+
+  <!--  为了一打开页面就出现图片 -->
+<script>
+         
+                    $.ajax({
+                        type:'get',
+                        url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+                        dataType:'JSONP',
+                        data:{classID:1},
+                        success:function(data){
+                            var img = $("#goods img");
+                            var p = $(".goodsName");
+                            var price = $('.price');
+                            console.log($(p[0]).html());
+                           for(var i=0;i<10;i++)
+                            {
+                                $(img[i]).attr('src',data[i].goodsListImg);
+                                $(p[i]).html(data[i].goodsName);
+                                $(price[i]).html('¥'+data[i].price);
+                                localStorage.setItem('goods'+i,data[i].goodsID);
+                            }
+                              }  
+                                })
+         
+    </script>    
+<!-- 切换相应分类的主体 -->
+<script>
+         var p=$(".haha li"); 
+         for(var i=0;i<5;i++){
+            (function(i){
+                $(p[i]).click(function(){
+                   var classID=localStorage['classID'+i];
+                    $.ajax({
+                        type:'get',
+                        url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+                        dataType:'JSONP',
+                        data:{classID:classID},
+                        success:function(data){
+                            var img = $("#goods img");
+                            var p = $(".goodsName");
+                            var price = $('.price');
+                            console.log($(p[0]).html());
+                           for(var i=0;i<10;i++)
+                            {
+                                $(img[i]).attr('src',data[i].goodsListImg);
+                                $(p[i]).html(data[i].goodsName);
+                                $(price[i]).html('¥'+data[i].price);
+                                $(img[i]).attr('goodsID',data[i].goodsID);
+                                console.log( $(img[i]).attr('goodsID'));
+                                localStorage.setItem('goods'+i,data[i].goodsID);
+                            }
+
+                           
+                           
+                        }
+                    })
+                })
+            })(i);
+         }
+    </script>  
+    <!-- 点击之后出来详情页 -->  
+   <script>
+        var goods=$("#goods img");
+        for(var i=0;i<goods.length;i++){
+            (function(i){
+                goods[i].onclick=function(){
+                    var goodsID=localStorage.getItem('goods'+i);
+                    window.location.href='xiangqing2.html#'+goodsID;
+                }
+            })(i)
+        }
+   </script>
+
+</html>

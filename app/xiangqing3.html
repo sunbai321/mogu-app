@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  
+  <meta charset="{CHARSET}">
+  <meat name="viewport"content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum  scale=1.0"/>
+ 
+    <script type="text/javascript" src="js/jQuery.js"></script>
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <script src='js/swiper-3.4.2.min.js'></script>
+  <title>商品页</title>
+  <style>
+    *{
+      margin: 0 auto;
+      text-align: center;
+    }
+  
+    #goods{
+            float: left;
+            width: 490px;
+            height: 820px;
+            text-align: center;
+            background-color: white;
+            color: rgb(88,92,100);
+            margin-top: 15px;
+            margin-left: 20px;
+        }
+        #goods img{
+            width:100%;
+            height: 653px;
+            display: inline-block;
+            margin-top: 4px;
+
+        }
+        #goods .goodsName{
+            width: 100%;
+            height: 40px;
+            margin-top:30px;
+            display: block;
+             text-align: left;
+            font-size: 30px;
+           margin-left: 4px;
+
+        }
+         #goods .price{
+            width: 100%;
+            height: 20px;
+            text-align: left;
+            font-size: 30px;
+            display:block;
+            color:red;
+        }
+        #className{
+          position: fixed;
+          top: 0;
+          right: 0;
+          background-color: #FF8888;
+          width: 1080px;
+          height: 143px;
+          font-size: 44px;
+          color:white;
+          line-height: 143px;
+          border-bottom: 1.5px solid rgb(222,61,150);
+        }
+       .bood{
+        background-color:rgb(238,240,243);
+        width:1080px;
+      }
+        .footer{
+          width: 449px;
+          height: 128px;
+          position: fixed;
+          left: 17px;
+          bottom: 22px;
+          background-color: rgba(57,63,74,0.8);
+        }
+        .footer img{
+              width: 66px;
+              height: 60px;
+              float: left;
+              margin-top: 30px;
+              margin-left: 66px;        
+            }
+            #zhong{
+            	width: 1080px;
+            	padding-left: -5px;
+            }
+            .right{font-weight:bolder;}
+
+  </style>
+  </head>
+<body class="bood">
+         
+            <div id="className">
+             <a style="margin-left: -400px" class="right"> < </a>
+             <span style="padding-left: 400px" ></span>
+            </div>
+           
+            <div id="zhong" >
+            <div id="goods" style="margin-top:160px;">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods" style="margin-top:160px;">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods"> 
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+            <div id="goods">
+                <img src="" alt="">
+                <span class='price'></span>
+                <span class='goodsName'></span>   
+            </div>
+              </div> 
+           
+</body>
+
+<script>
+
+
+             var classID=location.hash.substr(1);
+  
+             $.ajax({
+                        type:'get',
+                        url:'http://datainfo.duapp.com/shopdata/getGoods.php',
+                        dataType:'JSONP',
+                        data:{classID:classID},
+                        success:function(data){
+                          $("#className span").html(data[0].className);
+                           
+                            var img = $("#goods img");
+                            var p = $(".goodsName");
+                            var price = $('.price');
+                          
+                           for(var i=0;i<10;i++)
+                            {
+                              console.log(data[i].goodsID);
+                                $(img[i]).attr('src',data[i].goodsListImg);
+                                $(p[i]).html(data[i].goodsName);
+                                $(price[i]).html('¥'+data[i].price);
+                                localStorage.setItem('goodsID'+i,data[i].goodsID);
+                                 console.log($(p[i]).html());
+
+                            }
+                           
+                        }
+                    })
+  </script>
+  <script>
+  $(".right").click(function(){
+    $(location).prop('href','zhuye.html');
+  })
+  </script>
+
+  <!-- 到商品具体详情页 -->
+  <script>
+  var goodsID=$("#goods img");
+  for(var i=0;i<goodsID.length;i++){
+    (function(i){
+      $(goodsID[i]).click(function(){
+         var class1=localStorage['goodsID'+i];
+        $(location).prop('href', 'xiangqing2.html#'+class1);
+      })
+    })(i)
+  }
+  </script>
+ 
+</html>

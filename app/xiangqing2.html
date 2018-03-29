@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>物品详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    
+    <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
+    <script src='js/swiper-3.4.2.min.js'></script>
+    
+    <style type="text/css">
+      img{
+      width:416px;
+      height: 350px;
+     }
+     .price{
+      color:#FF8888;
+      margin-left: 20px;
+      font-size: 20px
+    }
+     li{
+      list-style: none;
+    }
+     .xiaoshou{
+      margin-top:50px;
+    }
+     .list{
+      margin-top:50px;
+    }
+      .shopping{
+                display: inline-block;
+                font-size: 18px;
+                color: white;
+                background-color: #FF8888;
+                font-weight: normal;
+                width: 120px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                border-radius: 2px;
+                font-family: 宋体;
+               margin-left: 200px;
+
+              
+        }
+        .title{
+          margin-left: 10px;
+          font-size: 20px;
+        }
+        a:link{
+          text-decoration: none;
+        }
+        .list{
+          margin-left: -30px
+        }
+       /* #good img{width:auto;height: }*/
+    </style>
+
+</head>
+
+<body>
+  <div style="height:40px;background-color:#FF8888;text-align: center;padding-top:20px;color:white;font-weight:normal;text-shadow: none;">
+   <a style="margin-left:-150px;color:white;" href="#" onClick="javascript :history.back(-1)" rel="external" class="right"> < </a> 
+  <span style="padding-left:150px;font-size: 20px">商品详情</span>
+  </div>
+	<div class="swiper-container">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide"><img src="" alt="" ></div>
+            <div class="swiper-slide"><img src="" alt="" ></div>
+            <div class="swiper-slide"><img src="" alt="" ></div>
+
+          </div>
+          <div class="swiper-pagination"></div>
+     </div>
+     
+   <div class="tan" style="width: 100px;height: 100px;border: 1px solid black;z-index: 9999;display: none;">
+   favsdvsdb
+   </div>
+
+
+     <div class="zhong">
+      <p class="title"> </p>
+      <div id="gou">
+         <span class='price'>  </span> 
+         <span class="shopping"> 加入购物车</span>
+      </div>
+     <span style='float:left;display:inline-block;margin-left:10px; font-size: 16px;margin-top:15px;margin-right: 25px'>快递：免运费</span> 
+    <div style="margin-top: 15px"> <span class="xiaoshou"></span></div>
+     <div style="border-bottom: 1px solid gray;margin-top: 50px"></div>
+    </div>
+     	
+    <ul class="list" style="font-size:18px;">  
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+     <div id="goods"> 
+      <img src="  " alt="">
+      <img src="  " alt="">
+      <img src="  " alt="">
+    </div>
+
+<div data-role="footer" data-position="fixed">
+          <div data-role="navbar">
+              <ul>
+                <li><a href="zhuye.html" style="background-color: #f9e9ec" rel="external" data-icon="info">首页</a></li>
+                <li><a href="gouwuche.html" rel="external" style="background-color: #f9e9ec" data-icon="check">购物车</a></li>
+                <li><a class="shezhi" href="" rel="external" style="background-color: #f9e9ec" data-icon="star">设置</a></li>
+             </ul>
+         </div>
+</body>
+     
+     <script>
+       var goodsID=window.location.hash.substr(1);
+       localStorage.setItem(goodsID,goodsID);
+       $.ajax({
+            url:"http://datainfo.duapp.com/shopdata/getGoods.php",
+            dataType:'JSONP',
+            data:{goodsID:goodsID},
+            success:function(data){
+                console.log(data[0]);
+                //获取名字什么的
+                $('.title').html(data[0].goodsName);
+                $('.xiaoshou').html('月销'+data[0].buynumber+"笔");
+                $('.price').html('¥'+data[0].price);
+               //获取详细介绍
+                var list1=data[0].detail.split('。');
+                var li=$('.list li');
+                for(var i=0;i<li.length;i++){
+                  $(li[i]).html(list1[i]);
+                }
+            
+                //轮播图中获取图片
+              var img1 = data[0].imgsUrl.split(',',3);
+             
+              var solid=$('.swiper-slide img');
+                
+              $(solid[0]).attr('src',img1[2].split('"')[1]);
+              $(solid[1]).attr('src',img1[0].split('"')[1]);
+              $(solid[2]).attr('src',img1[1].split('"')[1]); 
+              $(solid[3]).attr('src',img1[2].split('"')[1]); 
+              $(solid[4]).attr('src',img1[0].split('"')[1]); 
+              console.log(img1);       
+
+              var img= data[0].goodsBenUrl.split(',',3);
+              var imglist = $("#goods img");
+              $(imglist[0]).attr('src',img[0].split('"')[1])
+              $(imglist[1]).attr('src',img[1].split('"')[1])
+              $(imglist[2]).attr('src',img[2].split('"')[1])
+            }
+       })
+   </script>
+
+   <!-- 点击加入购物车触发的事件 -->
+    <script>
+       var goodsID=window.location.hash.substr(1);//hash是#，
+       var i=0;
+      $(".shopping").click(function(){
+             ++i;
+             var username=localStorage.getItem('userID');
+              console.log('-----');
+              console.log(username);
+              console.log(goodsID);
+              if(username!=null){
+         $.ajax({
+           url:"http://datainfo.duapp.com/shopdata/updatecar.php",
+           data:{userID:username,goodsID:goodsID,number:i},
+           success:function(data){
+           
+            // $('.tan').css('display','block');
+            // $('.tan').html('加入第'+i+'件');
+             alert('加入第'+i+'件');
+            
+             console.log(data);
+
+          }
+         });
+
+       }
+       else{alert('请先登录再加购物车呦~');}
+       });
+    
+   </script>
+        
+        <!-- 轮播图设置 -->
+
+<script>
+    var mySwiper = new Swiper('.swiper-container',{
+    autoplay : 2000,
+    pagination:".swiper-pagination",
+    loop:true
+    });
+</script>
+
+<script src="js/zhong.js"></script>
+</html>
